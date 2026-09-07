@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026 학교평가 안내 · 신일비즈니스고등학교</title>
+<style>
+:root{
+  --ink:#182338; --paper:#f4f5f8; --card:#ffffff; --line:#d5dae4; --moss:#243b6b; --moss-d:#1a2c50; --clay:#b0562c; --gold:#c39320; --mute:#5c6478; --quant:#a35a12; --qual:#243b6b; --blue:#2c5f82;
+  --shadow:0 1px 2px rgba(30,40,25,.05),0 6px 18px rgba(30,40,25,.06);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--paper);color:var(--ink);
+  font-family:"Pretendard","Malgun Gothic",-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo",system-ui,sans-serif;
+  line-height:1.6;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px}
+
+/* header — compact */
+header{background:linear-gradient(150deg,var(--moss-d),var(--moss));color:#f4f2ea;padding:30px 0 26px;position:relative;overflow:hidden}
+header::after{content:"";position:absolute;right:-40px;top:-50px;width:220px;height:220px;background:radial-gradient(circle,rgba(189,138,36,.30),transparent 70%)}
+.eyebrow{font-size:12px;letter-spacing:.26em;text-transform:uppercase;color:#e6c667;font-weight:700;margin:0 0 6px}
+header h1{font-size:clamp(24px,4vw,34px);margin:0 0 4px;font-weight:800;letter-spacing:-.02em;line-height:1.15}
+.school{font-size:13.5px;color:#c4d1bb;font-weight:600;margin-top:2px}
+.intro-msg{margin:16px 0 0;max-width:760px;font-size:14.5px;line-height:1.7;color:#e8ede2}
+.stats{display:flex;gap:12px;margin-top:18px}
+.stat{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.18);border-radius:10px;padding:10px 20px;text-align:center}
+.stat b{display:block;font-size:26px;font-weight:800;line-height:1;color:#fff}
+.stat span{font-size:12px;color:#d3ddca;letter-spacing:.04em}
+
+/* controls */
+.controls{position:sticky;top:0;z-index:20;background:var(--paper);padding:14px 0;border-bottom:1px solid var(--line)}
+.search{width:100%;padding:11px 15px;font-size:15px;border:1.5px solid var(--line);border-radius:10px;background:var(--card);color:var(--ink);font-family:inherit}
+.search:focus{outline:none;border-color:var(--moss);box-shadow:0 0 0 3px rgba(47,93,58,.15)}
+.filters{display:flex;flex-wrap:wrap;gap:7px;margin-top:11px}
+.chip{border:1.5px solid var(--line);background:var(--card);color:var(--mute);padding:6px 13px;border-radius:999px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;transition:.15s;white-space:nowrap}
+.chip:hover{border-color:var(--moss);color:var(--moss)}
+.chip.active{background:var(--moss);border-color:var(--moss);color:#fff}
+.chip .n{opacity:.6;font-weight:500;margin-left:3px;font-size:12px}
+
+/* how-to strip (light, below controls) */
+.guide{margin-top:22px;background:#fff;border:1px solid var(--line);border-left:4px solid var(--gold);border-radius:10px;padding:16px 18px;box-shadow:var(--shadow)}
+.guide h3{margin:0 0 10px;font-size:14px;font-weight:800;letter-spacing:.02em;color:var(--ink)}
+.guide-row{display:flex;gap:20px;flex-wrap:wrap}
+.guide-item{flex:1;min-width:240px;display:flex;gap:11px;align-items:flex-start}
+.guide-ic{flex-shrink:0;width:30px;height:30px;border-radius:8px;display:grid;place-items:center;font-size:15px;font-weight:800;color:#fff}
+.guide-ic.doc{background:var(--blue)}
+.guide-ic.drive{background:var(--clay)}
+.guide-item .t{font-size:13.5px;font-weight:800;margin-bottom:2px}
+.guide-item .d{font-size:13px;color:var(--mute);line-height:1.55}
+.guide-item code{background:#f0ede3;border:1px solid var(--line);border-radius:5px;padding:1px 6px;font-size:12.5px;color:var(--clay);font-weight:700;font-family:inherit}
+.preview-wrap{margin-top:16px}
+.preview-toggle{width:100%;display:flex;align-items:center;justify-content:center;gap:8px;background:var(--moss-d);color:#fff;border:none;border-radius:10px;padding:13px;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit;transition:.15s}
+.preview-toggle:hover{background:#1c3a25}
+.preview-toggle .ic{font-size:16px}
+.preview-panel{display:none;margin-top:12px;background:#fff;border:1px solid var(--line);border-radius:10px;padding:14px;box-shadow:var(--shadow)}
+.preview-panel.open{display:block}
+.prev-search{width:100%;padding:10px 14px;font-size:14px;border:1.5px solid var(--line);border-radius:9px;background:var(--paper);color:var(--ink);font-family:inherit;margin-bottom:12px}
+.prev-search:focus{outline:none;border-color:var(--moss);box-shadow:0 0 0 3px rgba(47,93,58,.14)}
+.prev-table-scroll{overflow-x:auto}
+table.prev{width:100%;border-collapse:collapse;font-size:14px;min-width:760px;table-layout:fixed}
+table.prev th{background:var(--moss);color:#fff;border:1px solid #cfd6c8;padding:8px 9px;font-weight:700;text-align:center;white-space:nowrap}
+table.prev col.c-area{width:17%}
+table.prev col.c-ind{width:31%}
+table.prev col.c-method{width:9%}
+table.prev col.c-score{width:9%}
+table.prev col.c-dept{width:34%}
+table.prev td{border:1px solid var(--line);padding:9px 10px;vertical-align:middle;word-break:keep-all}
+table.prev td.area{background:#eef1e8;font-weight:700;text-align:center;color:var(--moss-d);font-size:13px}
+table.prev td.ind{font-weight:600}
+table.prev td.ctr{text-align:center;white-space:nowrap}
+table.prev .m-quant{color:var(--quant);font-weight:700}
+table.prev .m-qual{color:var(--qual);font-weight:700}
+table.prev td.dept{font-size:13px;color:#3a4a33}
+table.prev tr.hl td{background:#fbf5e6}
+.prev-empty{text-align:center;color:var(--mute);padding:24px;font-size:14px}
+.prev-note{font-size:12px;color:var(--mute);margin-top:8px}
+
+/* areas */
+.area-block{margin-top:34px}
+.area-head{display:flex;align-items:baseline;gap:13px;margin-bottom:14px}
+.area-num{font-size:30px;font-weight:800;color:var(--gold);line-height:1;font-variant-numeric:tabular-nums}
+.area-title{font-size:18px;font-weight:800;letter-spacing:-.01em;margin:0}
+.grid{display:grid;grid-template-columns:1fr;gap:12px}
+
+/* cards */
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow);overflow:hidden;transition:.18s}
+.card:hover{box-shadow:0 2px 4px rgba(30,40,25,.08),0 12px 28px rgba(30,40,25,.10)}
+.card-top{padding:16px 18px;cursor:pointer;display:flex;gap:14px;align-items:flex-start}
+.card-main{flex:1;min-width:0}
+.ind-code{display:inline-block;background:var(--moss);color:#fff;font-size:13px;font-weight:800;padding:3px 10px;border-radius:6px;letter-spacing:.02em}
+.ind-title{font-size:18px;font-weight:700;margin:7px 0 9px;letter-spacing:-.01em}
+.title-row{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;margin:7px 0 9px}
+.title-row .ind-title{margin:0}
+.dept-row{display:flex;flex-wrap:wrap;gap:5px;align-items:center}
+.dept-tag{background:#eef1e8;color:var(--moss-d);border:1px solid #d9dece;padding:3px 10px;border-radius:6px;font-size:13.5px;font-weight:700}
+.method-badge{flex-shrink:0;font-size:13px;font-weight:800;padding:3px 11px;border-radius:999px;letter-spacing:.02em;white-space:nowrap}
+.method-badge.quant{background:#fff;color:var(--quant);border:1.5px solid var(--quant)}
+.method-badge.qual{background:#fff;color:var(--qual);border:1.5px solid var(--qual)}
+.score-badge{flex-shrink:0;font-size:13px;font-weight:800;padding:3px 11px;border-radius:999px;letter-spacing:.02em;white-space:nowrap;background:var(--gold);color:#fff}
+.toggle{flex-shrink:0;width:28px;height:28px;border-radius:7px;border:1px solid var(--line);background:var(--paper);display:grid;place-items:center;color:var(--mute);font-size:15px;transition:.2s;margin-top:2px}
+.card.open .toggle{background:var(--moss);color:#fff;border-color:var(--moss);transform:rotate(180deg)}
+
+/* detail */
+.detail{display:none;border-top:1px solid var(--line);padding:4px 18px 18px}
+.card.open .detail{display:block;animation:fade .22s ease}
+@keyframes fade{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
+.block{margin-top:16px}
+.block-label{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--mute);margin-bottom:7px}
+.block-label::before{content:"";width:13px;height:2px;background:var(--gold);border-radius:2px}
+.block-body{font-size:15.5px;white-space:pre-wrap;color:#28311f;line-height:1.65}
+.block-body.material{background:#fbf7ee;border:1px solid #ece1c9;border-left:3px solid var(--gold);border-radius:7px;padding:11px 13px}
+.block-body.coop{background:#eef3ee;border:1px solid #dae4da;border-left:3px solid var(--moss);border-radius:7px;padding:11px 13px}
+
+/* submit box — two clear actions */
+.submit-box{margin-top:16px;background:#eef4f8;border:1px solid #cfe0eb;border-radius:9px;padding:13px 15px}
+.submit-title{font-size:12px;font-weight:800;letter-spacing:.06em;color:var(--blue);margin-bottom:9px}
+.submit-actions{display:flex;flex-direction:column;gap:8px}
+.submit-line{display:flex;gap:10px;align-items:flex-start;font-size:13.5px;color:#24404f}
+.submit-line .num{flex-shrink:0;width:20px;height:20px;border-radius:50%;background:var(--blue);color:#fff;font-size:12px;font-weight:800;display:grid;place-items:center;margin-top:1px}
+.submit-line b{color:#183546}
+.submit-btns{display:flex;flex-wrap:wrap;gap:10px;margin-top:4px;align-items:flex-start}
+.submit-btn{margin:0;align-self:auto}
+.submit-btn{flex:1 1 0;min-width:120px;height:46px;line-height:1;justify-content:center;display:inline-flex;align-items:center;gap:7px;padding:0 14px;border-radius:9px;font-size:14px;font-weight:700;text-decoration:none;border:none;cursor:pointer;transition:.15s;font-family:inherit;text-align:center;white-space:nowrap;box-sizing:border-box}
+.submit-btn .ic{font-size:15px;line-height:1}
+.submit-btn.guide{background:var(--moss);color:#fff}
+.submit-btn.guide:hover{background:#254b30}
+.submit-btn.doc{background:var(--gold);color:#fff}
+.submit-btn.doc:hover{background:#9c7015}
+.submit-btn.drive{background:var(--clay);color:#fff}
+.submit-btn.drive:hover{background:#8f4522}
+.submit-btn.disabled{background:#e2e6ea;color:#9aa3ab;cursor:not-allowed;pointer-events:none}
+.submit-fname{margin-top:10px;font-size:12.5px;color:#4a6474}
+.fname{background:#fff;border:1px solid #cfe0eb;border-radius:6px;padding:1px 7px;font-size:12.5px;color:var(--clay);font-weight:700}
+
+.evid-toggle{margin-top:12px;font-size:12.5px;color:var(--moss);font-weight:700;cursor:pointer;background:none;border:none;padding:0;font-family:inherit;text-decoration:underline;text-underline-offset:2px}
+.evid-list{display:none;margin-top:9px;font-size:12.5px;color:var(--mute);white-space:pre-wrap;background:var(--paper);border:1px dashed var(--line);border-radius:7px;padding:11px 13px;max-height:240px;overflow-y:auto;line-height:1.7}
+.evid-list.show{display:block}
+.empty{text-align:center;padding:56px 20px;color:var(--mute)}
+.empty b{display:block;font-size:18px;color:var(--ink);margin-bottom:6px}
+footer{margin-top:48px;padding:24px 0 36px;border-top:1px solid var(--line);color:var(--mute);font-size:12.5px;text-align:center}
+.footer-org{margin-top:12px;font-size:13.5px;font-weight:700;color:var(--moss-d);letter-spacing:.02em}
+.legend{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;margin-bottom:12px}
+.legend span{display:inline-flex;align-items:center;gap:6px;font-size:12px}
+.dot{width:10px;height:10px;border-radius:3px;display:inline-block}
+@media(max-width:640px){
+  header{padding:24px 0 22px}.stats{gap:10px}.stat{padding:9px 16px}
+  .card-top{padding:14px 14px}.detail{padding:4px 14px 15px}.area-num{font-size:26px}
+  .guide-row{flex-direction:column;gap:14px}
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <p class="eyebrow">2026 School Evaluation</p>
+    <h1>2026학년도 학교평가 계획 안내</h1>
+    <div class="school">신일비즈니스고등학교</div>
+    <p class="intro-msg">학교평가는 우리 학교 교육활동을 함께 돌아보고 발전 방향을 찾는 과정입니다.<br>모든 교직원이 학교평가의 취지를 이해하고 함께 참여해 주시기 바랍니다.<br>아래에서 담당 부서와 업무를 검색하시고, 보고서 작성과 증빙자료 제출을 부탁드립니다.</p>
+  </div>
+</header>
+
+<div class="controls">
+  <div class="wrap">
+    <input class="search" id="search" type="text" placeholder="지표명, 부서, 제출자료로 검색…  (예: 기초학력, 행정실, 연수)">
+    <div class="filters" id="filters"></div>
+  </div>
+</div>
+
+<main class="wrap">
+  <div class="preview-wrap">
+    <button id="previewToggle" class="preview-toggle"><span class="ic">▤</span> 전체 지표 미리보기</button>
+    <div id="previewPanel" class="preview-panel">
+      <input class="prev-search" id="prevSearch" type="text" placeholder="부서명으로 검색…  (예: 교육연구부, 행정실)">
+      <div class="prev-table-scroll"><div id="prevTable"></div></div>
+    </div>
+  </div>
+  <div class="guide">
+    <h3>제출 방법</h3>
+    <div class="guide-row">
+      <div class="guide-item">
+        <div class="guide-ic doc">문서</div>
+        <div><div class="t">보고서는 구글문서로 작성</div>
+        <div class="d">해당 지표의 평가 보고서는 지정된 <b>구글문서</b>에서 작성합니다.</div></div>
+      </div>
+      <div class="guide-item">
+        <div class="guide-ic drive">첨부</div>
+        <div><div class="t">증빙자료는 구글드라이브에 첨부</div>
+        <div class="d">지표별 <b>구글드라이브 폴더</b>에 파일을 올립니다.<br>파일명은 <code>[1-1] 부서명_자료명</code></div></div>
+      </div>
+    </div>
+  </div>
+  <div id="content"></div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="legend">
+      <span><i class="dot" style="background:#a35a12"></i>정량평가 — 수치·비율·이수율 등 통계 산출</span>
+      <span><i class="dot" style="background:#243b6b"></i>정성평가 — 계획·운영·환류의 충실도 서술</span>
+    </div>
+    <div>본 안내는 학교평가 계획 자료를 바탕으로 정리되었습니다. 세부 기준은 경기도교육청 학교평가 지침을 따릅니다.</div>
+    <div class="footer-org">신일비즈니스고등학교 교육연구부</div>
+  </div>
+</footer>
+
+<script>
+const DATA = [{"area": "1. 학교 자율과 책임으로 역량을 키우는 교육", "indicator": "1-1. 학생 핵심역량 함양을 위한 교육과정 운영 노력", "dept": "교육연구부\n교육과정부\n스토어기획과부\n스마트IT경영과부\n보건간호과부\n특성화교육부\n진로기획부\n창의디자인과부", "quant": "핵심역량 함양 교육과정·수업·평가 연수 이수율\n- 재직 교원 중 교육과정·수업·평가 관련 연수를 15시간 이상 이수한 교원 비율", "qual": "생각의 힘을 키우는 수업·평가 내실화 노력\n- 계획 수립: 삶과 연계된 핵심 아이디어 중심 교육과정 재구성, 수업·평가 정합성\n- 운영 실천: 질문·탐구·토의·글쓰기 등 깊이 있는 수업, 수업공개·수업나눔, 성취평가제·논술형 평가 전문성\n- 성과·환류: 학생 맞춤형 피드백, 수업·평가 성찰의 반영", "material": "1. 교육과정-수업-평가 연수 이수 증빙자료(연간 15시간 이상 기준, 직무연수 이수증･내부결재 등)\n2. 수업나눔 계획 및 성과 결과(수업공개 계획, 수업나눔 평가회 등)\n3. 핵심역량 함양을 위한 교육과정, 수업, 평가, 장학 등 관련 자료\n4. 성취평가제･논술형 평가 내실화를 위한 노력(평가 계획서, 교과협의록, 학업성적관리위원회 협의록 등)\n5. 기타 핵심역량 함양 교육과정 운영, 깊이 있는 수업, 학습으로서의 평가 관련 자료(내부결재 등)", "coop": "(전교사)\n2022 개정 교육과정 관련 교육과정, 수업, 평가 연수 이수-전교사\n", "evid": "2025학년도 교육과정부 운영 계획(신일비즈니스고등학교-3448)  \n2025 교육발전특구 디지털영상캠퍼스 운영 계획 제출(신일비즈니스고등학교-4452)\n2025학년도 1학기 부사관반 체력단련 훈련 계획(신일비즈니스고등학교-3952)\n2025학년도 카페 창업 준비반 특강 운영 계획(신일비즈니스고등학교-5913)\n2025학년도 경제상식대회 운영 계획(신일비즈니스고등학교-9412)\n2025 미디어 스타트업 스쿨 참여 확정 학생 현황 추가 수정 보고(신일비즈니스고등학교-8990)\n2025 미디어 스타트업 스쿨 참여 확정 학생 현황 보고(신일비즈니스고등학교-8737)\n2025 교육발전특구 고양디지털영상캠퍼스 스토어기획과 운영 계획(신일비즈니스고등학교-7366)\n2025 교육발전특구 고양디지털영상캠퍼스 스토어기획과 운영 계획(수정)(신일비즈니스고등학교-8035)\n2025학년도 경제상식대회 운영 결과 보고(신일비즈니스고등학교-11017)\n2025 2학기 부사관반 체력단련훈련 프로그램 운영 계획(신일비즈니스고등학교-12180)\n2025학년도 카페 창업 준비반 특강 운영 계획(신일비즈니스고등학교-13568)\n2025학년도 취업역량강화 및 진로설계를 위한 면접 이미지 메이킹 프로그램 운영 계획(신일비즈니스고등학교-14324)\n2025 미디어 스타트업 스쿨 참여 확정 학생 현황 보고(신일비즈니스고등학교-15635)\n취업역량강화 및 진로설계를 위한 면접 프로그램 운영 계획(신일비즈니스고등학교-16847)\n2025 모의 창업 챌린지 신청서 제출(신일비즈니스고등학교-17188)\n2025 교육발전특구 제4창업캠퍼스 운영 결과 자료 제출(신일비즈니스고등학교-18971)\n2025 교육발전특구 2025 교육발전특구 디지털영상캠퍼스 운영 결과 및 집행결과 보고 제출(신일비즈니스고등학교-20743신일비즈니스고등학교-20743)\n교육발전특구 디지털영상캠퍼스 모의창업챌린지 운영 계획(신일비즈니스고등학교-20762)"}, {"area": "1. 학교 자율과 책임으로 역량을 키우는 교육", "indicator": "1-2. 기초학력 보장 실천", "dept": "교육연구부", "quant": "", "qual": "기초학력 보장 실천 노력\n- 계획 수립: 전년도 결과 분석 기반 기초학력 보장 계획 수립\n- 운영 실천: 진단→학습지원대상 선정, 미도달 예방, 맞춤형 프로그램 운영\n- 성과·환류: 향상도 점검, 예산 집행, 개선점 도출", "material": "1. 기초학력 보장을 위한 관련 계획 자료\n2. 기초학력 보장 계획에 따른 운영 자료\n3. 기초학력 보장 운영 결과에 대한 성과분석 및 환류 내용 자료", "coop": "(교육연구부)\n기초학력 계획 수립 및 운영\n\n(국영수교과교사)\n기초학력 보장 지도 시행", "evid": "2025학년도 교육연구부 운영 계획(신일비즈니스고3811)\n2025학년도 학습지원대상학생 지원협의회 개최(신일비즈니스고등학교-2991)\n2025학년도 제1차 학습지원대상학생 지원협의회 결과 보고(신일비즈니스고등학교-3171)\n2025 기초학력(3Rs.교과)진단활동 결과 제출(신일비즈니스고등학교-4090)\n2025학년도 학습지원교육 희망 가정통신문 발송(신일비즈니스고등학교-4552)\n2025 기초학력 보장 학교맞춤선택제 신청(신일비즈니스고등학교-4735)\n2025년 기초학력 보장 추진 현황 제출(신일비즈니스고등학교-6605)\n2025학년도 제2차 학습지원대상학생 지원협의회 개최(신일비즈니스고등학교-6944)\n2025학년도 제2차 학습지원대상학생 지원협의회 결과 보고(신일비즈니스고등학교-7124)\n2025학년도 두드림 학교 운영 계획서(신일비즈니스고등학교-7125)\n2025학년도 두드림 학교(기초학력) 운영 물품 품의(신일비즈니스고등학교-8687)\n단위학교 기초학력 체크리스트 제출(신일비즈니스고등학교-9772)\n2025학년도 기초학력 1차 향상도 검사 결과(고등학교)(신일비즈니스고등학교-9844)\n2025학년도 두드림 학교(기초학력) 운영 학생 간식비 품의(신일비즈니스고등학교-14448)\n2025학년도 두드림 학교(기초학력) 운영 학생 물품 품의(신일비즈니스고등학교-14449)\n기초학력 2차 향상도 검사 결과 제출(신일비즈니스고등학교-16541)\n2025년 기초학력 지원사업 성과평가 자료 제출(신일비즈니스고등학교-17053)\n2025학년도 두드림 학교(기초학력) 프로그램 강사비 지급(신일비즈니스고등학교-17474)\n2025 학년말 기초학력(3Rs) 도달도 진단 결과 제출(신일비즈니스고등학교-18961)\n2025학년도 학습지원대상학생 지원 협의회 실시(신일비즈니스고등학교-19668)\n2025학년도 제3차 학습지원대상학생 지원협의회 개최(신일비즈니스고등학교-19696)\n2025학년도 제3차 학습지원대상학생 지원협의회 결과 보고(신일비즈니스고등학교-20011)\n2025 기초학력 보장 학교맞춤선택제 운영보고서 및 정산서 제출(신일비즈니스고등학교-20189)\n2025학년도 학년말(3차) 기초학력 향상도 검사(신일비즈니스고등학교-21027)"}, {"area": "1. 학교 자율과 책임으로 역량을 키우는 교육", "indicator": "1-3. 인성･세계시민교육 활성화", "dept": "인성융합부", "quant": "", "qual": "인성·세계시민교육 활성화 노력\n- 계획 수립: 전년도 분석·교육공동체 의견 기반 계획 수립\n- 운영 실천: 교과·창체 연계 실천 중심 교육, 가정·지역사회 연계, 세계시민교육 역량 강화\n- 성과·환류: 성과분석, 예산 집행, 개선점 도출", "material": "1. 인성･세계시민교육 운영을 위한 관련 계획 자료\n2. 인성･세계시민교육 계획에 따른 운영 내용 자료\n3. 인성･세계시민교육 운영 결과에 대한 성과분석 및 환류 내용 자료", "coop": "(인성융합부)\n인성･세계시민교육 계획서 및 보고서 \n(담임교사)\n학급별 인성･세계시민교육 실시(학교자율과제)", "evid": "2025학년도 인성융합부 연간 운영계획(신일비즈니스고-3619)\n2025학년도 바른인성함양을 위한 프로젝트(신일비즈니스고-2626)\n2025학년도 1교 1인성브랜드 운영계획(신일비즈니스고-3583)\n2025학년도 교사대상 인성교육 계획(신일비즈니스고-4532)\n2025학년도 교사대상 학생봉사활동연수 계획(신일비즈니스고-4358)\n2025인성브랜드 ‘신비한 가치, 신비스럽게 잇다’ 운영계획(신일비즈니스고-5915)\n2025학년도 8월 바른 인성함양을 위한 공연 실시 계획(신일비즈니스고-10774)\n2025학년도 12월 바른 인성함양을 위한 공연 실시 계획(신일비즈니스고-15776)"}, {"area": "1. 학교 자율과 책임으로 역량을 키우는 교육", "indicator": "1-4. 교육활동 보호", "dept": "학생생활인권부", "quant": "1. 교육활동 침해행위 예방교육 계획 수립 및 학교 홈페이지 게시 여부(교원지위법 제24조(교육활동 침해행위 예방교육))\n-교직원･학생･학생의 보호자를 대상으로 교육활동 침해행위 예방교육을 매년 1회 이상 실시\n-예방교육 프로그램을 교직원･학생･학생의 보호자가 쉽게 확인할 수 있도록 학교 홈페이지에 게시(3.31.까지)\n2. 교육활동 보호 환경 조성 노력\n-교육활동 보호 안내장 발송, 교육활동 보호 문화 조성 행사 운영(캠페인, 자치회 활동, 창의적 체험활동 등), 민원면담실 조성(지정 포함), 녹음전화기 설치, 안심번호 서비스 사용, 교육활동 보호 통화연결음 구축, 비상벨 설치\n3. 상호존중 학교문화 조성 계획 수립 및 운영(경기도교육청 교육공동체의 권리와 책임에 관한 조례)\n-상호 존중하고 협력하는 학교문화 조성을 위한 운영 계획 수립\n-교육공동체가 서로 존중하는 문화를 만들어 갈 수 있는 교육활동 운영\n-학교에서 운영한 상호존중 교육활동을 홍보 및 공유", "qual": "", "material": "1. 교육활동 침해행위 예방 교육 계획 수립 및 홈페이지 게시 여부\n2. 상･하반기 교육활동 보호 환경 실태조사 결과\n3. 상호존중 학교문화 조성 관련 활동 운영 계획 수립, 학교맞춤형 상호존중 학교문화 활동 운영자료, 공유 및 홍보 자료\n", "coop": "(학생생활인권부)\n1. 교육활동 침해행위 예방 교육 계획 수립\n2. 상호존중 학교문화 조성 관련 활동 운영 계획 수립\n\n(담임)\n학급특색활동: 상호존중학교문화 활동 운영(1차시)", "evid": ""}, {"area": "2. 지역협력으로 꿈을 펼치는 교육", "indicator": "2-1. 지역교육협력 운영", "dept": "교육협동조합부\n창의디자인과부\n특성화교육부\n스토어기획과부\n보건간호과부\n진로기획부", "quant": "", "qual": "지역교육협력 활성화 노력\n- 계획 수립: 지역 여건·자원 반영, 수요조사 기반 협력 계획\n- 운영 실천: 교육과정·방과후와 지역 자원 연계, 지속적 운영\n- 성과·환류: 운영 결과 분석, 차년도 반영, 교육공동체와 공유", "material": "1. 지역교육협력 운영 및 활동 내용이 포함된 학교 교육과정 운영 계획서 및 결과보고서\n2. 지역교육협력 활성화 관련 자료(교육과정 운영 현황*, 교육자원 발굴(기관 연계, 인적･물적 자원 발굴 등))\n   *경기공유학교 학교맞춤형 운영 현황 포함\n3. 운영 활성화 노력 결과에 대한 성과분석 및 환류 내용 자료\n4. 경기공유학교 운영 지원 및 참여 실적 자료(경기공유학교 운영 지원단, 학교 자체 및 교육(지원)청 주관 연수(직무연수) 참여 실적, 거점활동공간 인증 등)", "coop": "(관련부서)\n지역교육협력 운영 및 활동 내용이 포함된 학교 교육과정 운영 계획서 및 결과보고서 작성\n\n(관련교사)\n경기공유학교 운영 지원 및 참여 실적 자료(경기공유학교 운영 지원단, 학교 자체 및 교육(지원)청 주관 연수(직무연수) 참여 실적, 거점활동공간 인증 등)", "evid": "∘[교특]지역 연계 디자인 및 디자인 실무 능력 강화 프로젝트 운영 계획(신일비즈니스고-7955(2025.5.29.))\n∘[교특]2025 『포트폴리오 제작 프로그램』  운영 계획(신일비즈니스고-10372(2025.4.22.))\n∘[교특]2025 대학연계 프로그램 1학기 운영 계획(신일비즈니스고-7206(2025.5.16.))\n∘[교특]2025 대학 연계 『3D 애니메이션 제작 과정』  운영 계획(신일비즈니스고-12248(2025.8.8.))\n∘[교특]AI Media Class 프로그램 운영 계획(신일비즈니스고-10976(2025.7.11.))\n∘2025 중부대 고교-대학-산학 연계 프로그램 운영 계획(신일비즈니스고-20199(2025.12.9.))\n∘[교특]2025 『청소년 미디어아트교육 미디어판타GY』 프로그램 운영 계획(신일비즈니스고-8674(2025.6.12.))\n∘2025 우리 학교 작은 꿈돌이 한마당 운영(신일비즈니스고-14813(2025.9.22.))\n∘제30회 고양꿈돌이 한마당 창의융합 페스티벌 부스 운영 참여(신일비즈니스고-16694(2025.10.23.))\n∘지역특성화 나눔프로젝트 ‘Lab to market’ 신일비즈니스고 운영 협력 지원(신일비즈니스고-10372(2025.6.11.))\n∘지역특성화 나눔프로젝트 2차 ‘Lab to market’ 신일비즈니스고 운영 협력 지원(신일비즈니스고-14018(2025.9.9.))"}, {"area": "2. 지역협력으로 꿈을 펼치는 교육", "indicator": "2-2-2. 산학연계 교육과정 운영", "dept": "특성화교육부\n보건간호과부\n진로기획부", "quant": "", "qual": "1. 산학연계 맞춤형 교육과정 운영 및 취업역량 강화 사업 참여도\n2. 특성화고 기술 자격증 취득률 및 특성화고 전문교과 교원의 현장실습 관련 연수 참여율\n3. 현장실습 참여 학생에 대한 안전 점검 실시 및 순회지도", "material": "1. 학교교육계획 및 산학일체형 도제학교, 경기형 도제학교, 중소기업특성화고 인력양성사업 등 맞춤형 산학연계 교육과정 운영 현황\n2. 평가 학년도 내 국가공인 자격증 취득 현황 및 전문교과 교원의 현장실습 관련 연수 참여율\n3. 현장실습 프로그램 운영계획서 및 순회지도 결과보고서, 학습일지(LMS)", "coop": "(특성화교육부) \n1. 국가공인 자격증 취득 격려\n2. 전문교과 교원의 현장실습 관련 연수 계획 및 실행\n3. 현장실습 프로그램 운영계획서 및 순회지도 기록", "evid": "산학 협력 업무협약 체결계획(신일비즈니스고-6099,-14195,-15168, -15676, -16877, -17002, -17192, -18440, -18931, 20525\n2025 대한민국 고졸 인재 채용 엑스포 참가계획(신일비즈니스고-7207)\n2025 직업계고 교원 현장실습 및 취업 교육 역량 강화 연수비 품의(신일비즈니스고- 8457)\n2025학년도 학교 현장실습 운영계획서(최종) 제출(신일비즈니스고-8881)\n2025학년도 1차 3학년 학습중심 현장실습 순회지도 계획(신일비즈니스고-11505) 2025학년도 2차 3학년 학습중심 현장실습 순회지도 계획(신일비즈니스고- 12769), 2025학년도 3차 3학년 학습중심 현장실습 순회지도 계획(신일비즈니스고- 14562), 2025학년도 4차 4학년 학습중심 현장실습 순회지도 계획(신일비즈니스고-16087), 2025학년도 5차 4학년 학습중심 현장실습 순회지도 계획(신일비즈니스고-18674), 2025학년도 6차 4학년 학습중심 현장실습 순회지도 계획(신일비즈니스고-21156), 2025 특성화고-청년 취업박람회 참가계획 및 가정통신문 발송(신일비즈니스고-12967), 2025 경기도교육청 직업계고 취창업박람회 참가 계획 및 가정통신문 발송(신일비즈니스고- 13276), 2025년 고교생 진로체험 교육 운영계획(신일비즈니스고-16056)"}, {"area": "3. 시공간을 넘어 배움을 확장하는 교육", "indicator": "3-1. 디지털 기반 수업 활성화", "dept": "교육연구부", "quant": "", "qual": "디지털 기반 수업 실천 노력\n- 계획 수립: 인적·물적 자원 고려한 수업계획, 교수·학습 설계 구체화\n- 운영 실천: 학생 맞춤형 디지털 수업, 학년·교과·주제별 운영, 교사 참여 지원\n- 성과·환류: 성찰·환류, 예산 집행, 개선점 도출", "material": "1. 디지털 기반 수업을 위한 관련 계획 자료\n2. 디지털 기반 수업 계획에 따른 운영 내용 자료\n3. 디지털 기반 수업 운영 결과에 대한 성과분석 및 환류 내용 자료", "coop": "(교육연구부) \n1. 디지털기반수업 계획서 내부결재\n2. 디지털기반수업 내실화를 위한 방안 마련", "evid": ""}, {"area": "3. 시공간을 넘어 배움을 확장하는 교육", "indicator": "3-2. 교원 역량 강화", "dept": "교육연구부", "quant": "교원 역량 강화를 위한 연수 이수율", "qual": "", "material": "1. 교원 역량 강화를 위한 교사 연수 이수 현황(NEIS 등재 사항)\n2. 직무연수 이수증, 이수 확인서\n3. 학교장 결재를 득한 연수 이수 증빙자료(내부결재, 등록부 등)", "coop": "(교육연구부) \n교원 역량 강화를 위한 연수 계획 및 실행", "evid": ""}, {"area": "4. 학교중심의 공교육 확대를 지원하는 행정", "indicator": "4-1. 학교회계 효율적 집행 제고", "dept": "행정실", "quant": "1. 학교회계 집행 비율\n-학교회계 집행률(전년도 최종 집행률)\n-학교회계(교육운영비*) 집행률\n      * 교육운영비: 예산과목 중 세목 ‘교육운영비(B10-02[교육운영비(B100201), 학습준비물(B100202), 학생복지비(B100203)]\n-학교회계(당해년도 교육활동비**) 비율\n     ** 교육활동비: 기본적 교육활동 및 선택적 교육활동에 소요되는 사업비로써, 비율이 높을수록 단위학교에서 교육활동을 위하여 많은 노력을 하는 것으로 볼 수 있음.(세출사업별 정책사업 단위: 기본적교육활동, 선택적교육활동)", "qual": "", "material": "1. 에듀파인 자료(학교회계(전체, 교육운영비) 집행률)\n2. EDS 데이터 추출자료 활용(예산담당관에서 일괄 추출)\n3. 에듀파인 자료(교육활동비 비율)\n", "coop": "", "evid": "- 2024학년도 학교회계 세입세출 결산서[전년도 최종 집행률]\n- 에듀파인-재정분석-집행실적-예산조기집행실적[당해연도 교육운영비]"}, {"area": "4. 학교중심의 공교육 확대를 지원하는 행정", "indicator": "4-2. 학교시설 개방", "dept": "행정실", "quant": "지역사회 협력(시설개방 등) 활성화 실천 정도\n-학교시설 개방 여부\n-학교시설 개방 및 이용실태 점검 결과", "qual": "", "material": "1. 학교 홈페이지에 게시하는 개방가능 일수를 교육지원청에서 취합･공지한 데이터, 학교시설공사 계약서 등(예외적 개방 인정)\n2. 외부 게시 증빙자료(사진 등), 학교 홈페이지 화면캡처, 일시사용 허가대장 증빙자료 등", "coop": "(행정실) \n관련 증빙자료 수집 및 제출", "evid": "- 학교홈페이지-학교시설개방 민원창구-학교시설 개방 현황 게시"}, {"area": "5. 환류", "indicator": "5-1. 학교자율장학 운영", "dept": "교육연구부", "quant": "", "qual": "학교자율장학 운영의 선순환 체계 실천 노력\n- 계획 수립: 학교 여건·필요 분석, 구성원 숙의로 장학 방법·범위 도출\n- 운영 실천: 수업·학교 운영 성찰, 교원 전문성 신장, 협력 기반 체계적 실행\n- 평가·환류: 성과·과제 분석, 차년도 반영 및 공유", "material": "1. 학교자율장학 계획 수립을 위한 진단 자료\n2. 학교자율장학 운영을 위한 관련 계획 자료\n3. 학교교육 전반과 연계한 학교자율장학 운영 자료\n4. 학교자율장학 평가 결과 분석 및 환류 자료", "coop": "(교육연구부) \n학교자율장학 계획서 및 보고서 작성", "evid": ""}, {"area": "5. 환류", "indicator": "5-2. 학교자율과제 운영", "dept": "교육연구부", "quant": "", "qual": "학교자율과제 운영 단계별 노력\n- 현안 진단: 협의체 활용 실태 진단, 비전·목표 기반 현안 도출\n- 계획 수립: 구성원 숙의로 계획 수립, 교육과정 반영 및 예산 편성\n- 운영 실천: 교육과정 연계 운영, 중간 점검\n- 평가·환류: 성과·문제점 분석, 예산 효율 집행", "material": "1. 학교자율역량 진단도구 등 현안 진단 자료\n2. 학교자율과제 운영을 위한 관련 계획 자료\n3. 교육과정과 연계한 학교자율과제 실행 자료\n4. 학교자율과제 운영에 대한 평가 및 환류 자료", "coop": "(교육연구부) \n학교자율과제 운영 계획서 및 실행, 평가보고서 작성\n\n(관련부서)\n학교자율과제 목표에 부합하는 예산 사용 및 활동 계획", "evid": "2025학년도 학교자율과제 세부운영계획 수립(신일비즈니스고등학교-8225)\n2025학년도 학교자율과제 운영 결과 보고(신일비즈니스고등학교-20836)\n2025학년도 교육활동평가회 결과보고 (신일비즈니스고등학교-20717)"}, {"area": "5. 환류", "indicator": "5-3. 교육공동체 의견 수렴 및차년도 교육계획 반영 노력", "dept": "교육연구부", "quant": "", "qual": "교육공동체 의견 수렴 및 차년도 반영 노력\n- 학생: 특성 맞춘 설문 구성, 강점·개선점 분석, 차년도 반영\n- 교직원: 교육과정·수업·평가·운영 인식 수렴, 성과·한계 성찰, 반영\n- 학부모: 학부모 관점 진단, 소통·지원 성찰, 차년도 반영", "material": "1. 학생‧교직원‧학부모 의견 수렴을 위한 설문 문항 구성 자료\n2. 설문 조사 결과 분석 및 성찰 내용", "coop": "(교육연구부)사전에 학교평가에 대한 인식 제고", "evid": "2025학년도 학교평가 교육만족도 설문 안내 가정통신문 발송(신일비즈니스고등학교-20169) \n2025학년도 학교평가 교육만족도 설문 결과 보고(신일비즈니스고등학교-21605)\n2025학년도 학교평가 교육만족도 설문 안내 가정통신문 발송(신일비즈니스고등학교-20169) \n2025학년도 학교평가 교육만족도 설문 결과 보고(신일비즈니스고등학교-21605)\n2025학년도 학교평가 교육만족도 설문 안내 가정통신문 발송(신일비즈니스고등학교-20169) \n2025학년도 학교평가 교육만족도 설문 결과 보고(신일비즈니스고등학교-21605)"}];
+
+// 지표별 구글문서/구글드라이브 링크를 여기에 넣으세요. 키는 지표번호(예: "1-1").
+const REPORT_DOC = "https://docs.google.com/document/d/1y2eYQ5AF90iRWZg9eYpKpBy11shvTlKXk623WbEIVp4/edit?usp=sharing";
+const DOC_LINKS = {
+  "1-1": REPORT_DOC, "1-2": REPORT_DOC, "1-3": REPORT_DOC, "1-4": REPORT_DOC,
+  "2-1": REPORT_DOC, "2-2-2": REPORT_DOC, "3-1": REPORT_DOC, "3-2": REPORT_DOC,
+  "4-1": REPORT_DOC, "4-2": REPORT_DOC, "5-1": REPORT_DOC, "5-2": REPORT_DOC, "5-3": REPORT_DOC,
+};
+const DRIVE_LINKS = {
+  "1-1": "https://drive.google.com/drive/folders/1PXiCdkpHpb49-rRdPM727j49W7gjG22O",
+  "1-2": "https://drive.google.com/drive/folders/1gGe69eYCjMveOVwPOJc9KLnivxb-V6Ul",
+  "1-3": "https://drive.google.com/drive/folders/10sCQrPZTJX6g_E1VHTZQv5gRvFrIGfrN",
+  "1-4": "https://drive.google.com/drive/folders/10sCQrPZTJX6g_E1VHTZQv5gRvFrIGfrN",
+  "2-1": "https://drive.google.com/drive/folders/1NJPaGJmbTwgxyNn_ZGSl7buUwQUX3g_6",
+  "2-2-2": "https://drive.google.com/drive/folders/1JyMysazVE4-xRvy2qN2RQ6-Bbs3YIPW7",
+  "3-1": "https://drive.google.com/drive/folders/12S9yjre5lCQ4uFLX844zRDmMFhWySUif",
+  "3-2": "https://drive.google.com/drive/folders/1LNSls3DwVr7vQbTV3E5ZpDeL66ecj4dF",
+  "4-1": "https://drive.google.com/drive/folders/1J0-KIRweW4_pJJMAI-4WB1NzzxYgiUmf",
+  "4-2": "https://drive.google.com/drive/folders/1kSyFyQA1hPZg1nkNh0JusW_KQRLMOVvB",
+  "5-1": "https://drive.google.com/drive/folders/14_YNiS_elmuTOp_sLXrA2piVwVRlwfHQ",
+  "5-2": "https://drive.google.com/drive/folders/1ERLahMCJC4y_FkWfCmyQSW-mTQ8awpA8",
+  "5-3": "https://drive.google.com/drive/folders/1iBDz44Dm_q-uCy3xOh2JcffQDoQIx7gV",
+};
+// 지표별 안내자료 PDF 링크를 여기에 넣으세요 (구글드라이브 공유 링크). 비어 있으면 '준비 중'으로 표시됩니다.
+const GUIDE_LINKS = {
+  "1-1": "https://drive.google.com/file/d/10WvW4gAd9KwD29jwpvkAPbV8mV0QYtvZ/view?usp=drive_link",
+  "1-2": "https://drive.google.com/file/d/1BBd57ghvyi0A3dvhbREgAEQMFHOJ4E-z/view?usp=drive_link",
+  "1-3": "https://drive.google.com/file/d/19eY9oB0RZXKF6EpZ-rzDwBUnb6-1QITM/view?usp=drive_link",
+  "1-4": "https://drive.google.com/file/d/1RwLd-rfymxu0UDWpPygR4d7hRRKADexN/view?usp=drive_link",
+  "2-1": "https://drive.google.com/file/d/1pB-GRjknsNRA4uxfQWdaz22-ZJEQqBbp/view?usp=drive_link",
+  "2-2-2": "https://drive.google.com/file/d/1PZj_iruB8MumfqNUYWez0ABcV5d2puID/view?usp=drive_link",
+  "3-1": "https://drive.google.com/file/d/1i3pSkicTpGQ7PWNT7lQj3_52sfCw87el/view?usp=drive_link",
+  "3-2": "https://drive.google.com/file/d/1vColrM-6Y_NoKmRZGxgA0SBDihruOdQy/view?usp=drive_link",
+  "4-1": "https://drive.google.com/file/d/1W8Dl-3nEkTkU11dNNVbNkxZNYvAW6wX7/view?usp=drive_link",
+  "4-2": "https://drive.google.com/file/d/1deoCkFCFtmf2fNWPbTjhA_4FDDC2dAAb/view?usp=drive_link",
+  "5-1": "https://drive.google.com/file/d/1qkMe2xAh1Agig9OrRug_pn7lzCwf2X4k/view?usp=drive_link",
+  "5-2": "https://drive.google.com/file/d/1xzdMWuwF77l97vi2UUBncI6e4DmMaEKp/view?usp=drive_link",
+  "5-3": "https://drive.google.com/file/d/17HfETDRTwCLV2w4D95wHDHCxLQ68an5q/view?usp=drive_link",
+};
+
+const areas=[]; DATA.forEach(d=>{ if(!areas.includes(d.area)) areas.push(d.area); });
+const deptCount={};
+DATA.forEach(d=>{ d.dept.split("\n").map(x=>x.trim()).filter(Boolean).forEach(dep=>{ deptCount[dep]=(deptCount[dep]||0)+1; }); });
+const depts=Object.keys(deptCount).sort((a,b)=>deptCount[b]-deptCount[a]);
+
+let activeDept="전체";
+const filterBox=document.getElementById("filters");
+function renderFilters(){
+  const chips=[`<button class="chip ${activeDept==='전체'?'active':''}" data-d="전체">전체 부서<span class="n">${DATA.length}</span></button>`];
+  depts.forEach(dep=>{ chips.push(`<button class="chip ${activeDept===dep?'active':''}" data-d="${dep}">${dep}<span class="n">${deptCount[dep]}</span></button>`); });
+  filterBox.innerHTML=chips.join("");
+  filterBox.querySelectorAll(".chip").forEach(c=>{ c.onclick=()=>{ activeDept=c.dataset.d; renderFilters(); render(); }; });
+}
+function parseAreaNum(a){ const m=a.match(/^(\d+)\.\s*(.*)/); return m?[m[1],m[2].trim()]:["",a]; }
+function esc(s){return (s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
+function hl(t,q){ if(!q) return esc(t); const x=esc(t);
+  try{ return x.replace(new RegExp("("+q.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")+")","gi"),'<mark style="background:#fbe4bd;padding:0 1px;border-radius:2px">$1</mark>'); }catch(e){ return x; } }
+
+const content=document.getElementById("content"), searchEl=document.getElementById("search");
+function render(){
+  const q=searchEl.value.trim().toLowerCase();
+  let items=DATA.map((d,i)=>({...d,_i:i}));
+  if(activeDept!=="전체") items=items.filter(d=>d.dept.includes(activeDept));
+  if(q) items=items.filter(d=>(d.indicator+d.dept+d.quant+d.qual+d.material+d.coop+d.area).toLowerCase().includes(q));
+  if(items.length===0){ content.innerHTML=`<div class="empty"><b>검색 결과가 없습니다</b>다른 부서나 검색어로 다시 시도해 보세요.</div>`; return; }
+  let html="";
+  areas.forEach(area=>{
+    const group=items.filter(d=>d.area===area); if(!group.length) return;
+    const [num,title]=parseAreaNum(area);
+    html+=`<section class="area-block"><div class="area-head"><div class="area-num">${num||"·"}</div><h2 class="area-title">${esc(title)}</h2></div><div class="grid">`;
+    group.forEach(d=>{
+      const deptTags=d.dept.split("\n").map(x=>x.trim()).filter(Boolean).map(x=>`<span class="dept-tag">${esc(x)}</span>`).join("");
+      const cm=d.indicator.match(/^([\d\-]+)\.?\s*(.*)/);
+      const code=cm?cm[1]:""; const iname=cm?cm[2]:d.indicator;
+      const badges=[];
+      if(d.quant.trim()) badges.push('<span class="method-badge quant">정량</span>');
+      if(d.qual.trim()) badges.push('<span class="method-badge qual">정성</span>');
+      const SCORES={'1-1':'15','1-2':'5','1-3':'5','1-4':'5','2-1':'5','2-2-2':'5','3-1':'5','3-2':'5','4-1':'5','4-2':'5','5-1':'10','5-2':'15','5-3':'15'};
+      if(SCORES[code]) badges.unshift(`<span class="score-badge">${SCORES[code]}점</span>`);
+      function blk(label,body,cls){ return `<div class="block"><div class="block-label">${label}</div><div class="block-body ${cls}">${hl(body.trim(),q)}</div></div>`; }
+      let detail="";
+      if(d.quant.trim()) detail+=blk("정량평가 항목",d.quant,"");
+      if(d.qual.trim()) detail+=blk("정성평가 항목",d.qual,"");
+      const doc=DOC_LINKS[code], drv=DRIVE_LINKS[code], guide=GUIDE_LINKS[code];
+      const guideBtn = guide
+        ? `<a class="submit-btn guide" href="${guide}" target="_blank" rel="noopener"><span class="ic">📄</span>안내자료 보기</a>`
+        : `<span class="submit-btn guide disabled"><span class="ic">📄</span>안내자료 준비 중</span>`;
+      const docBtn = doc
+        ? `<a class="submit-btn doc" href="${doc}" target="_blank" rel="noopener"><span class="ic">📝</span>보고서 작성하기</a>`
+        : `<span class="submit-btn doc disabled"><span class="ic">📝</span>보고서 작성하기 (링크 준비 중)</span>`;
+      const drvBtn = drv
+        ? `<a class="submit-btn drive" href="${drv}" target="_blank" rel="noopener"><span class="ic">📁</span>증빙자료 제출하기</a>`
+        : `<span class="submit-btn drive disabled"><span class="ic">📁</span>증빙자료 제출하기 (링크 준비 중)</span>`;
+      detail+=`<div class="submit-box"><div class="submit-title">지표 안내 및 제출</div>`+
+        `<div class="submit-btns">${guideBtn}${docBtn}${drvBtn}</div>`+
+        `<div class="submit-fname">증빙자료 파일명 · <span class="fname">[${esc(code)}] 부서명_자료명</span></div>`+
+        `</div>`;
+      if(d.evid.trim()){
+        detail+=`<div class="block"><button class="evid-toggle" onclick="event.stopPropagation();this.nextElementSibling.classList.toggle('show');this.textContent=this.nextElementSibling.classList.contains('show')?'▲ 2025학년도 제출 사례 접기':'▼ 2025학년도 제출 사례 펼쳐보기 (참고)'">▼ 2025학년도 제출 사례 펼쳐보기 (참고)</button><div class="evid-list">${hl(d.evid,q)}</div></div>`;
+      }
+      html+=`<div class="card" data-i="${d._i}"><div class="card-top" onclick="this.parentElement.classList.toggle('open')"><div class="card-main"><span class="ind-code">${esc(code)}</span><div class="title-row"><div class="ind-title">${hl(iname,q)}</div>${badges.join("")}</div><div class="dept-row">${deptTags}</div></div><div class="toggle">⌄</div></div><div class="detail">${detail}</div></div>`;
+    });
+    html+=`</div></section>`;
+  });
+  content.innerHTML=html;
+}
+searchEl.addEventListener("input",render);
+renderFilters(); render();
+
+// ===== 전체 지표 미리보기 표 =====
+const PREV_SCORES={'1-1':'15','1-2':'5','1-3':'5','1-4':'5','2-1':'5','2-2-2':'5','3-1':'5','3-2':'5','4-1':'5','4-2':'5','5-1':'10','5-2':'15','5-3':'15'};
+const AREA_SCORES={'1':'30','2':'10','3':'10','4':'10','5':'40'};
+function buildPreview(query){
+  const q=(query||'').trim();
+  // group rows by area, but only include indicators whose dept matches query (if any)
+  const rows=DATA.map((d,i)=>{
+    const code=(d.indicator.match(/^([\d\-]+)/)||['',''])[1];
+    const iname=d.indicator.replace(/^[\d\-]+\.\s*/,'');
+    const [an,at]=parseAreaNum(d.area);
+    const depts=d.dept.split("\n").map(x=>x.trim()).filter(Boolean);
+    const method=(d.quant.trim()&&d.qual.trim())?'정량·정성':(d.quant.trim()?'정량':'정성');
+    return {code,iname,an,at,depts,method};
+  });
+  const match = r => !q || r.depts.some(x=>x.includes(q));
+  const shown = rows.filter(match);
+  if(shown.length===0){ document.getElementById('prevTable').innerHTML=`<div class="prev-empty">‘${esc(q)}’ 담당 지표가 없습니다.</div>`; return; }
+  // group by area preserving order
+  const areaOrder=[]; shown.forEach(r=>{ if(!areaOrder.includes(r.an)) areaOrder.push(r.an); });
+  let html=`<table class="prev"><colgroup><col class="c-area"><col class="c-ind"><col class="c-method"><col class="c-score"><col class="c-dept"></colgroup><thead><tr><th>평가영역</th><th>평가지표</th><th>평가방법</th><th>평가점수</th><th>부서</th></tr></thead><tbody>`;
+  areaOrder.forEach(an=>{
+    const grp=shown.filter(r=>r.an===an);
+    grp.forEach((r,idx)=>{
+      let cells='';
+      if(idx===0){
+        const at=grp[0].at + (AREA_SCORES[an]?`\n(${AREA_SCORES[an]}점)`:'');
+        cells+=`<td class="area" rowspan="${grp.length}">${esc(an)}. ${esc(grp[0].at)}<br><span style="font-weight:400;color:#6b7563">(${AREA_SCORES[an]||''}점)</span></td>`;
+      }
+      const deptHTML=r.depts.map(x=>{
+        const on=q&&x.includes(q);
+        return on?`<b style="color:var(--clay)">${esc(x)}</b>`:esc(x);
+      }).join(', ');
+      let methodHTML;
+      if(r.method.includes('정량')&&r.method.includes('정성')){
+        methodHTML=`<span class="m-quant">정량</span>·<span class="m-qual">정성</span>`;
+      } else if(r.method==='정량'){
+        methodHTML=`<span class="m-quant">정량</span>`;
+      } else {
+        methodHTML=`<span class="m-qual">정성</span>`;
+      }
+      cells+=`<td class="ind">${esc(r.code)}. ${esc(r.iname)}</td>`;
+      cells+=`<td class="ctr">${methodHTML}</td>`;
+      cells+=`<td class="ctr">${PREV_SCORES[r.code]||''}점</td>`;
+      cells+=`<td class="dept">${deptHTML}</td>`;
+      html+=`<tr class="${q?'hl':''}">${cells}</tr>`;
+    });
+  });
+  html+=`</tbody></table><div class="prev-note">※ 평가결과(등급·득점)는 확정 후 보고서에 기재합니다.</div>`;
+  document.getElementById('prevTable').innerHTML=html;
+}
+const prevToggle=document.getElementById('previewToggle');
+const prevPanel=document.getElementById('previewPanel');
+const prevSearch=document.getElementById('prevSearch');
+prevToggle.onclick=()=>{
+  const open=prevPanel.classList.toggle('open');
+  prevToggle.innerHTML = open ? '<span class="ic">▲</span> 미리보기 접기' : '<span class="ic">▤</span> 전체 지표 미리보기';
+  if(open && !document.getElementById('prevTable').innerHTML) buildPreview('');
+};
+prevSearch.addEventListener('input',e=>buildPreview(e.target.value));
+</script>
+</body>
+</html>
